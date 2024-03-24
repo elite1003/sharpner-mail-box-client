@@ -1,19 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./store/index";
-// Bootstrap CSS
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-// Bootstrap Bundle JS
 import "../node_modules/bootstrap/dist/js/bootstrap.bundle.min";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import LogIn from "./components/LogIn/LogIn";
+import SignUp from "./components/SignUp/SignUp";
+import Home from "./components/Home/Home";
+import App from "./App";
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      { path: "", element: <Home /> },
+      { path: "login", element: <LogIn /> },
+      { path: "signup", element: <SignUp /> },
+    ],
+  },
+]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );

@@ -3,12 +3,13 @@ import { Container, Form, Button, Row, Col, Card } from "react-bootstrap";
 // import { Link } from "react-router-dom";
 import { authActions } from "../../store/auth-slice";
 import { useDispatch } from "react-redux";
-
+import { useNavigate } from "react-router-dom";
 const SignUp = () => {
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
   const confirmPasswordInputRef = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const signUpFormSubmitHandler = async (e) => {
     e.preventDefault();
@@ -37,16 +38,16 @@ const SignUp = () => {
           }
         );
         if (!response.ok) {
-          throw new Error("Signup failed");
+          throw new Error("User Exist");
         }
         const data = await response.json();
-        console.log(data);
         dispatch(
           authActions.login({
             token: data.idToken,
             email: email.replace(/[@.]/g, ""),
           })
         );
+        navigate("/");
       } catch (error) {
         alert(error.message);
       }

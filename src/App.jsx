@@ -1,9 +1,9 @@
 import React from "react";
-import SignUp from "./components/SignUp/SignUp";
+import { Outlet } from "react-router-dom";
 const App = () => {
   return (
     <div>
-      <SignUp />
+      <Outlet />
     </div>
   );
 };
