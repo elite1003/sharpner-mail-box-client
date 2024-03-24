@@ -35,7 +35,7 @@ const LogIn = () => {
         email: email.replace(/[@.]/g, ""),
       })
     );
-    navigate("/");
+    navigate("/home");
   };
   const LoginFormSubmitHandler = (e) => {
     e.preventDefault();

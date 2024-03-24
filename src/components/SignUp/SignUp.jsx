@@ -47,7 +47,7 @@ const SignUp = () => {
             email: email.replace(/[@.]/g, ""),
           })
         );
-        navigate("/");
+        navigate("/home");
       } catch (error) {
         alert(error.message);
       }
