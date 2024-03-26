@@ -11,6 +11,7 @@ import LogIn from "./components/LogIn/LogIn";
 import SignUp from "./components/SignUp/SignUp";
 import Home from "./components/Home/Home";
 import App from "./App";
+import ComposeMail from "./components/Mail/ComposeMail";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "home", element: <Home /> },
       { path: "login", element: <LogIn /> },
       { path: "signup", element: <SignUp /> },
+      { path: "composeMail", element: <ComposeMail /> },
     ],
   },
 ]);

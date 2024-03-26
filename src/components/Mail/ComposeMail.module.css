@@ -1,0 +1,10 @@
+.demo-wrapper {
+  margin: 1em 0;
+}
+
+.demo-editor {
+  min-height: 200px;
+  border: 1px solid black;
+  padding: 1em;
+  border-radius: 5px;
+}
