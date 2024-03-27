@@ -12,16 +12,32 @@ import SignUp from "./components/SignUp/SignUp";
 import Home from "./components/Home/Home";
 import App from "./App";
 import ComposeMail from "./components/Mail/ComposeMail";
+import Inbox from "./components/Mail/Inbox";
+import Sent from "./components/Mail/Sent";
+import Mail from "./components/Mail/Mail";
+import SentMessageDetail from "./components/Mail/SentMessageDetail";
+import InboxMessageDetail from "./components/Mail/InboxMessageDetail";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "", element: "" },
+      { path: "", element: <Home /> },
       { path: "home", element: <Home /> },
       { path: "login", element: <LogIn /> },
       { path: "signup", element: <SignUp /> },
-      { path: "composeMail", element: <ComposeMail /> },
+      {
+        path: "mail",
+        element: <Mail />,
+        children: [
+          { path: "", element: <ComposeMail /> },
+          { path: "inbox/:id", element: <InboxMessageDetail /> },
+          { path: "inbox", element: <Inbox /> },
+          { path: "sent/:id", element: <SentMessageDetail /> },
+          { path: "sent", element: <Sent /> },
+          { path: "compose", element: <ComposeMail /> },
+        ],
+      },
     ],
   },
 ]);

@@ -4,14 +4,15 @@ import { Editor } from "react-draft-wysiwyg";
 import "../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Button, Form, Card, Col, Row, Container } from "react-bootstrap";
 import classes from "./ComposeMail.module.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { mailActions } from "../../store/mail-slice";
 
 function ComposeMail() {
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const userEmail = useSelector((state) => state.auth.email);
-
+  const dispatch = useDispatch();
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
@@ -19,16 +20,18 @@ function ComposeMail() {
   const sendMail = async (e) => {
     e.preventDefault();
     const contentState = editorState.getCurrentContent();
+    const blocks = convertToRaw(contentState).blocks.map((block) => block.text);
     try {
+      const sentMailData = {
+        to,
+        subject,
+        blocks,
+      };
       const response = await fetch(
         `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${userEmail}/sent.json`,
         {
           method: "POST",
-          body: JSON.stringify({
-            to,
-            subject,
-            blocks: convertToRaw(contentState).blocks,
-          }),
+          body: JSON.stringify(sentMailData),
           headers: {
             "Content-type": "application/json",
           },
@@ -38,11 +41,16 @@ function ComposeMail() {
         throw new Error("saving data to sent email failed");
       }
       const data = await response.json();
-      console.log(data);
+      dispatch(mailActions.addMailToSent({ ...sentMailData, id: data.name }));
     } catch (error) {
       alert(error.message);
     }
     try {
+      const inboxMailData = {
+        from: userEmail,
+        subject,
+        blocks,
+      };
       const response = await fetch(
         `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${to.replace(
           /[@.]/g,
@@ -50,21 +58,15 @@ function ComposeMail() {
         )}/inbox.json`,
         {
           method: "POST",
-          body: JSON.stringify({
-            from: userEmail,
-            subject,
-            blocks: convertToRaw(contentState).blocks,
-          }),
+          body: JSON.stringify(inboxMailData),
           headers: {
             "Content-type": "application/json",
           },
         }
       );
       if (!response.ok) {
-        throw new Error("saving data to inbox email failed");
+        throw new Error("saving data reciever inbox failed");
       }
-      const data = await response.json();
-      console.log(data);
     } catch (error) {
       alert(error.message);
     }

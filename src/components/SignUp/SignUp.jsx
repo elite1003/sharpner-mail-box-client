@@ -62,7 +62,7 @@ const SignUp = () => {
       className="d-flex align-items-center justify-content-center "
       style={{ minHeight: "100vh" }}
     >
-      <Card.Body className="w-25 ">
+      <Card.Body className="w-50 ">
         <Container className="p-5 border  shadow rounded">
           <Row>
             <Col>
