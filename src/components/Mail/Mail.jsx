@@ -1,7 +1,11 @@
 import React from "react";
 import { Button, Navbar, Form, Row, Col } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 const Mail = () => {
+  const totalUnreadInboxMail = useSelector(
+    (state) => state.mail.totalUnreadInboxMail
+  );
   return (
     <div>
       <Navbar bg="light" expand="lg">
@@ -54,6 +58,8 @@ const Mail = () => {
             >
               Inbox
             </Link>
+            {"  "}
+            {totalUnreadInboxMail}
           </Button>
           <Button variant="warning" size="lg" style={{ marginBottom: "10px" }}>
             <Link

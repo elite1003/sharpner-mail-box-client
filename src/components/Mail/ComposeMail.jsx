@@ -50,6 +50,7 @@ function ComposeMail() {
         from: userEmail,
         subject,
         blocks,
+        isRead: false,
       };
       const response = await fetch(
         `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${to.replace(
@@ -65,7 +66,7 @@ function ComposeMail() {
         }
       );
       if (!response.ok) {
-        throw new Error("saving data reciever inbox failed");
+        throw new Error("saving data at receiver inbox failed");
       }
     } catch (error) {
       alert(error.message);
