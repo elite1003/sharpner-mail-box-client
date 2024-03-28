@@ -38,10 +38,53 @@ export const fetchMail = () => {
         }
       }
       dispatch(
-        mailActions.initMail({
+        mailActions.initSentMail({
           sent: fetchedSentMail,
-          inbox: fetchedInboxMail,
           totalSentMail,
+        })
+      );
+      dispatch(
+        mailActions.initInboxMail({
+          inbox: fetchedInboxMail,
+          totalUnreadInboxMail,
+        })
+      );
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+};
+
+export const fetchInbox = () => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${userEmail}/inbox.json`
+      );
+
+      if (!response.ok) {
+        throw new Error("Could not fetch email data!");
+      }
+      const data = await response.json();
+      return data;
+    };
+
+    try {
+      const inboxMailData = await fetchData();
+      const fetchedInboxMail = [];
+      let totalUnreadInboxMail = 0;
+      for (const key in inboxMailData) {
+        const element = inboxMailData[key];
+        if (Object.hasOwnProperty.call(inboxMailData, key)) {
+          fetchedInboxMail.push({ id: key, ...element });
+        }
+        if (!element.isRead) {
+          totalUnreadInboxMail++;
+        }
+      }
+      dispatch(
+        mailActions.initInboxMail({
+          inbox: fetchedInboxMail,
           totalUnreadInboxMail,
         })
       );

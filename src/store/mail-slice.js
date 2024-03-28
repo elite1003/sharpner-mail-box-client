@@ -9,11 +9,13 @@ const mailSlice = createSlice({
     totalSentMail: 0,
   },
   reducers: {
-    initMail(state, action) {
+    initSentMail(state, action) {
       state.sent = action.payload.sent;
+      state.totalSentMail = action.payload.totalSentMail;
+    },
+    initInboxMail(state, action) {
       state.inbox = action.payload.inbox;
       state.totalUnreadInboxMail = action.payload.totalUnreadInboxMail;
-      state.totalSentMail = action.payload.totalSentMail;
     },
     addMailToSent(state, action) {
       state.sent.push(action.payload);
