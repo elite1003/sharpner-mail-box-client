@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Navbar, Form, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
+import { Envelope } from "react-bootstrap-icons";
 const Mail = () => {
   const totalUnreadInboxMail = useSelector(
     (state) => state.mail.totalUnreadInboxMail
@@ -9,7 +10,9 @@ const Mail = () => {
   return (
     <div>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand>Mail App</Navbar.Brand>
+        <Navbar.Brand>
+          <Envelope color="currentColor" className="ms-4" size={40} />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Form style={{ width: "90%" }}>
@@ -34,41 +37,47 @@ const Mail = () => {
             flexDirection: "column",
           }}
         >
-          <Button
-            variant="dark"
-            size="lg"
-            style={{ marginBottom: "10px" }}
-            active
+          <Link
+            to={`compose`}
+            style={{ color: "white", textDecoration: "none" }}
           >
-            <Link
-              to={`compose`}
-              style={{ color: "white", textDecoration: "none" }}
+            <Button
+              variant="dark"
+              size="lg"
+              style={{ marginBottom: "10px", width: "100%" }}
+              active
             >
               Compose Mail
-            </Link>
-          </Button>
-          <Button
-            variant="secondary"
-            size="lg"
-            style={{ marginBottom: "10px" }}
+            </Button>
+          </Link>
+
+          <Link
+            to={`inbox`}
+            style={{ color: "#8ed49f", textDecoration: "none" }}
           >
-            <Link
-              to={`inbox`}
-              style={{ color: "#8ed49f", textDecoration: "none" }}
+            <Button
+              variant="secondary"
+              size="lg"
+              style={{ marginBottom: "10px", width: "100%" }}
             >
               Inbox
-            </Link>
-            {"  "}
-            {totalUnreadInboxMail}
-          </Button>
-          <Button variant="warning" size="lg" style={{ marginBottom: "10px" }}>
-            <Link
-              to={`sent`}
-              style={{ color: "#9347bf", textDecoration: "none" }}
+              {"  "}
+              {totalUnreadInboxMail}
+            </Button>
+          </Link>
+
+          <Link
+            to={`sent`}
+            style={{ color: "#9347bf", textDecoration: "none" }}
+          >
+            <Button
+              variant="warning"
+              size="lg"
+              style={{ marginBottom: "10px", width: "100%" }}
             >
               Sent
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </div>
         <div style={{ flex: 1, padding: "10px" }}>
           <Outlet />

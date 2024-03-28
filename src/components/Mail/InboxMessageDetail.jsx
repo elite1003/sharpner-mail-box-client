@@ -9,7 +9,7 @@ const SentMessageDetail = () => {
   return (
     <Card>
       <Card.Header>
-        <Card.Title>{message.subject}</Card.Title>
+        <Card.Title>Subject: {message.subject}</Card.Title>
         <Card.Subtitle className="mb-2 text-muted">
           From: {message.from}
         </Card.Subtitle>

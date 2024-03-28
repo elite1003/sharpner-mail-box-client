@@ -19,9 +19,15 @@ const mailSlice = createSlice({
       state.sent.push(action.payload);
       state.totalSentMail++;
     },
+    removeMailFromSent(state, action) {
+      state.sent = state.sent.filter((mail) => mail.id !== action.payload);
+    },
     addMailToInbox(state, action) {
       state.inbox.push(action.payload);
       state.totalUnreadInboxMail++;
+    },
+    removeMailFromInbox(state, action) {
+      state.inbox = state.inbox.filter((mail) => mail.id !== action.payload);
     },
     updateInboxMail(state, action) {
       const mailIndex = state.inbox.findIndex(
