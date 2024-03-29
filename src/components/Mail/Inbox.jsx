@@ -1,48 +1,13 @@
 import React from "react";
 import { ListGroup, Badge, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { mailActions } from "../../store/mail-slice";
-
+import { useMailClick, useDeleteMail } from "../../hooks/useInbox";
 const Inbox = () => {
   const inboxMail = useSelector((state) => state.mail.inbox);
   const userEmail = useSelector((state) => state.auth.email);
-  const dispatch = useDispatch();
-
-  const handleMailClick = async (id) => {
-    try {
-      const response = await fetch(
-        `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${userEmail}/inbox/${id}.json`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({ isRead: true }),
-          headers: { "Content-type": "application/json" },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("updating message status from non read to read failed");
-      }
-      dispatch(mailActions.updateInboxMail(id));
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-  const handleDeleteEmail = async (id) => {
-    try {
-      const response = await fetch(
-        `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${userEmail}/inbox/${id}.json`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (!response.ok) {
-        throw new Error("deleting message from inbox failed");
-      }
-      dispatch(mailActions.removeMailFromInbox(id));
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  const handleMailClick = useMailClick(userEmail);
+  const handleDeleteEmail = useDeleteMail(userEmail);
   return (
     <ListGroup>
       {inboxMail.map((item) => (

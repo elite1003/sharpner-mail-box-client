@@ -3,10 +3,14 @@ import { Button, Navbar, Form, Row, Col } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import { Envelope } from "react-bootstrap-icons";
+import { useFetchMail, useFetchInbox } from "../../hooks/useMail";
+
 const Mail = () => {
   const totalUnreadInboxMail = useSelector(
     (state) => state.mail.totalUnreadInboxMail
   );
+  useFetchInbox();
+  useFetchMail();
   return (
     <div>
       <Navbar bg="light" expand="lg">

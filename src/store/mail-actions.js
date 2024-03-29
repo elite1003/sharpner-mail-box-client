@@ -12,7 +12,7 @@ export const fetchMail = () => {
         throw new Error("Could not fetch email data!");
       }
       const data = await response.json();
-      return data;
+      return data || { sent: {}, inbox: {} };
     };
 
     try {
@@ -66,7 +66,7 @@ export const fetchInbox = () => {
         throw new Error("Could not fetch email data!");
       }
       const data = await response.json();
-      return data;
+      return data || {};
     };
 
     try {
