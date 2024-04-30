@@ -2,6 +2,7 @@ import { EditorState, convertToRaw } from "draft-js";
 import { useDispatch, useSelector } from "react-redux";
 import { mailActions } from "../store/mail-slice";
 import { useState } from "react";
+
 export const useComposeAndSendMail = () => {
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState("");

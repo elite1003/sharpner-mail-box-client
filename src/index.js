@@ -17,6 +17,7 @@ import Sent from "./components/Mail/Sent";
 import Mail from "./components/Mail/Mail";
 import SentMessageDetail from "./components/Mail/SentMessageDetail";
 import InboxMessageDetail from "./components/Mail/InboxMessageDetail";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -28,7 +29,11 @@ const router = createBrowserRouter([
       { path: "signup", element: <SignUp /> },
       {
         path: "mail",
-        element: <Mail />,
+        element: (
+          <ProtectedRoute>
+            <Mail />
+          </ProtectedRoute>
+        ),
         children: [
           { path: "", element: <ComposeMail /> },
           { path: "inbox/:id", element: <InboxMessageDetail /> },
