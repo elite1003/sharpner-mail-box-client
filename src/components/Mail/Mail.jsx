@@ -9,8 +9,8 @@ const Mail = () => {
   const totalUnreadInboxMail = useSelector(
     (state) => state.mail.totalUnreadInboxMail
   );
-  useFetchInbox();
   useFetchMail();
+  useFetchInbox();
   return (
     <div>
       <Navbar bg="light" expand="lg">

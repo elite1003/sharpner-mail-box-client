@@ -1,15 +1,15 @@
 import { mailActions } from "./mail-slice";
 
-const userEmail = JSON.parse(localStorage.getItem("email"));
 export const fetchMail = () => {
   return async (dispatch) => {
     const fetchData = async () => {
+      const userEmail = localStorage.getItem("email");
       const response = await fetch(
         `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${userEmail}.json`
       );
 
       if (!response.ok) {
-        throw new Error("Could not fetch email data!");
+        throw new Error("Could not fetch mail data!");
       }
       const data = await response.json();
       return data || { sent: {}, inbox: {} };
@@ -50,7 +50,7 @@ export const fetchMail = () => {
         })
       );
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
 };
@@ -58,12 +58,13 @@ export const fetchMail = () => {
 export const fetchInbox = () => {
   return async (dispatch) => {
     const fetchData = async () => {
+      const userEmail = localStorage.getItem("email");
       const response = await fetch(
         `https://compose-mail-app-default-rtdb.asia-southeast1.firebasedatabase.app/${userEmail}/inbox.json`
       );
 
       if (!response.ok) {
-        throw new Error("Could not fetch email data!");
+        throw new Error("Could not fetch inbox data!");
       }
       const data = await response.json();
       return data || {};
@@ -89,7 +90,7 @@ export const fetchInbox = () => {
         })
       );
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
 };

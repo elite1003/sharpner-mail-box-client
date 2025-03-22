@@ -9,12 +9,15 @@ export const useComposeAndSendMail = () => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const userEmail = useSelector((state) => state.auth.email);
   const dispatch = useDispatch();
+
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState);
   };
+
   const onToChange = (e) => {
     setTo(e.target.value);
   };
+
   const onSubjectChange = (e) => {
     setSubject(e.target.value);
   };
@@ -39,7 +42,7 @@ export const useComposeAndSendMail = () => {
         }
       );
       if (!response.ok) {
-        throw new Error("saving data to sent email failed");
+        throw new Error("saving data to firebase sent DB failed");
       }
       const data = await response.json();
       dispatch(mailActions.addMailToSent({ ...sentMailData, id: data.name }));
@@ -67,7 +70,7 @@ export const useComposeAndSendMail = () => {
         }
       );
       if (!response.ok) {
-        throw new Error("saving data at receiver inbox failed");
+        throw new Error("saving data to firebase inbox DB failed");
       }
     } catch (error) {
       alert(error.message);

@@ -18,6 +18,7 @@ import Mail from "./components/Mail/Mail";
 import SentMessageDetail from "./components/Mail/SentMessageDetail";
 import InboxMessageDetail from "./components/Mail/InboxMessageDetail";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+
 const router = createBrowserRouter([
   {
     path: "/",
